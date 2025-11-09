@@ -1,19 +1,21 @@
-# scripts/get_refresh_token.py
 from google_auth_oauthlib.flow import InstalledAppFlow
 import pickle, os
 
 SCOPES = [
-    
-    "https://mail.google.com/",
-    "https://www.googleapis.com/auth/spreadsheets"
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://mail.google.com/"
 ]
 
-CREDS_PATH = "D:\Hired Next\email_automation_app\credentials.json"  # put your downloaded OAuth JSON here (Desktop app)
-if not os.path.exists(CREDS_PATH):
-    raise FileNotFoundError(f"Put your OAuth client JSON at {CREDS_PATH} (Desktop app)")
+CREDENTIALS_FILE = "credentials.json"
+TOKEN_FILE = "token.json"
 
-flow = InstalledAppFlow.from_client_secrets_file(CREDS_PATH, SCOPES)
+if not os.path.exists(CREDENTIALS_FILE):
+    raise FileNotFoundError(f"Missing {CREDENTIALS_FILE}. Download it from Google Cloud Console (Desktop App).")
+
+flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_FILE, SCOPES)
 creds = flow.run_local_server(port=0)
-with open("token.json", "wb") as f:
-    pickle.dump(creds, f)
-print("✅ token.json created in project root. Keep it safe.")
+
+with open(TOKEN_FILE, "wb") as token:
+    pickle.dump(creds, token)
+
+print("✅ token.json generated successfully — Gmail + Sheets access granted!")
