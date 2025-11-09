@@ -1,0 +1,16 @@
+# Sensitive files
+credentials.json
+token.json
+scripts/client_secret.json
+.streamlit/secrets.toml
+
+# Python stuff
+__pycache__/
+*.pyc
+.env
+venv/
+
+# Editors / OS
+.vscode/
+.DS_Store
+Thumbs.db
